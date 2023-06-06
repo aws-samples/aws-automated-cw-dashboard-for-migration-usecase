@@ -15,7 +15,7 @@ Please check the architecture.png for architectural diagram
 
 ## Step-by-Step Guide
 
-1. Replace the <region> in cw_dashboard.py with the region of your choice. 
+1. Replace the `<region>` in cw_dashboard.py with the region of your choice. 
 
 2. Zip the Lambda function and upload it on to an S3 bucket of your choice. Use this [link](https://docs.aws.amazon.com/lambda/latest/dg/python-package.html) to learn how to zip the lambda function in python.
 
