@@ -1,6 +1,6 @@
 # Creating a near-realtime  Amazon CloudWatch dashboard to track migration status
 
-
+This solution is designed to create a near-realtime Amazon CloudWatch dashboard and automate it for the migration use case. The migration service used is AWS Application Migration Service (AWS MGN). Once the CW dashboard is created, you can make it scalable to add more mmetrics/widgets to it. The solution can also be used for any other non-migration activities such as IOT, Data analytics, Zero Trust etc. 
 
 ## Solution Overview
 
