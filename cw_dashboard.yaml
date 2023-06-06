@@ -1,0 +1,81 @@
+Resources:
+    LambdaRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        RoleName: MGN_CW1Role
+        AssumeRolePolicyDocument:
+          Statement:
+            - Action:
+              - sts:AssumeRole
+              Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+          Version: 2012-10-17
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        Path: /
+    CreateLambdaPolicy:
+      Type: 'AWS::IAM::ManagedPolicy'
+      Properties:
+        Description: Policy for updating CW Metric and describing source server on MGN
+        Path: /
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Action: 'mgn:DescribeSourceServers'
+              Resource: '*'
+            - Effect: Allow
+              Action: 'cloudwatch:PutMetricData'
+              Resource: '*'
+            - Effect: Allow
+              Action: 'cloudwatch:PutDashboard'
+              Resource: '*'
+            - Effect: Allow
+              Action: 'cloudwatch:GetDashboard'
+              Resource: '*'
+            - Effect: Allow
+              Action: 'ec2:DescribeInstanceStatus'
+              Resource: '*'
+        Roles:
+          - !Ref LambdaRole
+    LambdaFunction:
+      Type: 'AWS::Lambda::Function'
+      Properties:
+        FunctionName: 'MGNLambda'
+        Description: LambdaFunction for creating custom metrics and putting metric data on CW Dashboard
+        Runtime: python3.9
+        Handler: CW_Dashboard.lambda_handler
+        MemorySize: 128
+        Timeout: 10
+        Code:
+          S3Bucket: <s3-bucket>
+          S3Key: my-deployment-package.zip
+        Role:
+          Fn::GetAtt:
+            - LambdaRole
+            - Arn
+    ScheduledRule: 
+      Type: 'AWS::Events::Rule'
+      Properties: 
+        Description: "ScheduledRule"
+        ScheduleExpression: "rate(1 minute)"
+        State: "ENABLED"
+        Targets:
+          - 
+            Arn: 
+              Fn::GetAtt: 
+                - "LambdaFunction"
+                - "Arn"
+            Id: "TargetFunctionV1"
+    PermissionForEventsToInvokeLambda: 
+      Type: 'AWS::Lambda::Permission'
+      Properties: 
+        FunctionName: !Ref "LambdaFunction"
+        Action: "lambda:InvokeFunction"
+        Principal: "events.amazonaws.com"
+        SourceArn: 
+          Fn::GetAtt: 
+            - "ScheduledRule"
+            - "Arn"
