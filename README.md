@@ -8,14 +8,14 @@ Please check the architecture.png for architectural diagram
 
 1. The solution starts with an AWS Eventbridge cron rule that runs every 1 minute to invoke the AWS Lambda function. 
 
-2. The Lambda code in python (CW_Dashboard.py) is customized for the Migration use case. You can use this code to push system-defined and user-defined metrics to Amazon CloudWatch dashboard. The Lambda function will create custom metrics by using MGN APIs and push it to AmazCloudWatch. These will be the user-defined custom metrics.
+2. The Lambda code in python (cw_dashboard.py) is customized for the Migration use case. You can use this code to push system-defined and user-defined metrics to Amazon CloudWatch dashboard. The Lambda function will create custom metrics by using MGN APIs and push it to AmazCloudWatch. These will be the user-defined custom metrics.
 
 3. The Lambda function will then publish user-defined and system-defined metrics on to Amazon CloudWatch dashboard. This dashboard can then be used to see performance metrics or other statistics of your migration journey. The red dotted box in the architecture diagram can be generalized for any non-migration use case use case also such as: Data Analytics, IOT, Zero trust etc.
 
 
 ## Step-by-Step Guide
 
-1. Replace the <region> in CW_Dashboard.py with the region of your choice. 
+1. Replace the <region> in cw_dashboard.py with the region of your choice. 
 
 2. Zip the Lambda function and upload it on to an S3 bucket of your choice. Use this [link](https://docs.aws.amazon.com/lambda/latest/dg/python-package.html) to learn how to zip the lambda function in python.
 
