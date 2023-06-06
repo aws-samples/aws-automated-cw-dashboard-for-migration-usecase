@@ -46,7 +46,7 @@ Resources:
         FunctionName: 'MGNLambda'
         Description: LambdaFunction for creating custom metrics and putting metric data on CW Dashboard
         Runtime: python3.9
-        Handler: CW_Dashboard.lambda_handler
+        Handler: cw_dashboard.lambda_handler
         MemorySize: 128
         Timeout: 10
         Code:
