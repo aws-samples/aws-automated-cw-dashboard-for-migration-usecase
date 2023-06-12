@@ -4,7 +4,8 @@ This solution is designed to create a near-realtime Amazon CloudWatch dashboard 
 
 ## Solution Overview
 
-Please check the architecture.png for architectural diagram
+Please check the architecture.png for architectural diagram![Architecture](https://github.com/aws-samples/aws-automated-cw-dashboard-for-migration-usecase/assets/7454602/b8bbd241-e5f7-4218-b23a-ea0913911b4d)
+
 
 1. The solution starts with an AWS Eventbridge cron rule that runs every 1 minute to invoke the AWS Lambda function. 
 
